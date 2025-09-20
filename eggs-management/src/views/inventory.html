@@ -1,0 +1,84 @@
+<!-- Inventory Management Section -->
+<div class="inventory-header">
+    <div class="inventory-actions">
+        <button class="btn btn-primary" id="addInventoryBtn">
+            <span>📦</span> Add Inventory
+        </button>
+    </div>
+
+    <div class="inventory-stats">
+        <div class="stat-mini">
+            <span class="stat-number" id="totalEggs">0</span>
+            <span class="stat-label">Total Eggs</span>
+        </div>
+        <div class="stat-mini">
+            <span class="stat-number" id="fullTrays">0</span>
+            <span class="stat-label">Full Trays</span>
+        </div>
+        <div class="stat-mini">
+            <span class="stat-number" id="partialTrays">0</span>
+            <span class="stat-label">Partial Trays</span>
+        </div>
+        <div class="stat-mini">
+            <span class="stat-number" id="thisMonthEggs">0</span>
+            <span class="stat-label">This Month</span>
+        </div>
+    </div>
+</div>
+<!-- Inventory Table -->
+<div class="inventory-table-container">
+    <table class="inventory-table">
+        <thead>
+            <tr>
+                <th>Supplier Name</th>
+                <th>Trays</th>
+                <th>Quantity (pcs)</th>
+                <th>Delivery Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventoryTableBody">
+            <!-- Rows will be added dynamically -->
+        </tbody>
+    </table>
+</div>
+<!-- Add Inventory Modal -->
+<div id="addInventoryModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add Inventory Record</h3>
+            <button class="close-btn" id="closeInventoryModalBtn">✖️</button>
+        </div>
+        <form class="inventory-form" id="inventoryForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="supplierName">Supplier Name</label>
+                    <input type="text" id="supplierName" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="supplierName">Trays</label>
+                    <input type="number" id="Trays" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity (pieces)  </label>
+                    <input type="number" id="quantity" min="0" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="deliveryDate">Delivery Date  </label>
+                    <input type="date" id="deliveryDate" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelInventoryBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary" onclick="showAddInventoryModal()">Add Inventory</button>
+            </div>
+        </form>
+    </div>
+</div>
