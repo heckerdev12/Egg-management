@@ -1,39 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri App</title>
-    <script type="module" src="/main.js" defer></script>
-  </head>
-
-  <body>
-    <main class="container">
-      <h1>Welcome to Tauri</h1>
-
-      <div class="row">
-        <a href="https://tauri.app" target="_blank">
-          <img src="/assets/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-          target="_blank"
-        >
-          <img
-            src="/assets/javascript.svg"
-            class="logo vanilla"
-            alt="JavaScript logo"
-          />
-        </a>
-      </div>
-      <p>Click on the Tauri logo to learn more about the framework</p>
-
-      <form class="row" id="greet-form">
-        <input id="greet-input" placeholder="Enter a name..." />
-        <button type="submit">Greet</button>
-      </form>
-      <p id="greet-msg"></p>
-    </main>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eggs Management System</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="app-title">
+                <h1>Eggs Management</h1>
+            </div>
+            
+            <ul class="nav-tabs">
+                <li class="nav-tab active" data-tab="dashboard">
+                    <span>📊 Dashboard</span>
+                </li>
+                <li class="nav-tab" data-tab="reports">
+                    <span>📈 Reports</span>
+                </li>
+                <li class="nav-tab" data-tab="customers">
+                    <span>👥 Customers</span>
+                </li>
+                <li class="nav-tab" data-tab="payments">
+                    <span>💳 Payments</span>
+                </li>
+                <li class="nav-tab" data-tab="inventory">
+                    <span>📦 Inventory</span>
+                </li>
+                <li class="nav-tab" data-tab="sales">
+                    <span>🛒 Sales</span>
+                </li>
+            </ul>
+        </aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Static Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h2 id="page-title">Dashboard</h2>
+                    <p id="page-description">Overview of eggs management system</p>
+                </div>
+                <div class="date-display">
+                    <div class="month" id="current-month">September</div>
+                    <div class="date" id="current-date">Saturday, 20</div>
+                </div>
+            </header>
+            <!-- Scrollable Content -->
+            <div class="content-body">
+                <div id="content-container">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Tab switching functionality
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const pageTitle = document.getElementById('page-title');
+        const pageDescription = document.getElementById('page-description');
+        // Tab configurations
+        const tabConfig = {
+            dashboard: {
+                title: 'Dashboard',
+                description: 'Overview of eggs management system',
+                file: 'views/dashboard.html'
+            },
+            reports: {
+                title: 'Reports',
+                description: 'Detailed reports and analytics',
+                file: 'views/reports.html'
+            },
+            customers: {
+                title: 'Customers',
+                description: 'Customer management and information',
+                file: 'views/customers.html'
+            },
+            payments: {
+                title: 'Payments',
+                description: 'Payment tracking and management',
+                file: 'views/payments.html'
+            },
+            inventory: {
+                title: 'Inventory',
+                description: 'Stock management and tracking',
+                file: 'views/inventory.html'
+            },
+            sales: {
+                title: 'Sales',
+                description: 'Sales records and transactions',
+                file: 'views/sales.html'
+            }
+        };
+        // Add click event listeners to navigation tabs
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                navTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Get tab name
+                const tabName = tab.getAttribute('data-tab');
+                
+                // Update header content
+                if (tabConfig[tabName]) {
+                    pageTitle.textContent = tabConfig[tabName].title;
+                    pageDescription.textContent = tabConfig[tabName].description;
+                }
+                
+                // Load the corresponding HTML file
+                loadContent(tabConfig[tabName].file);
+            });
+        });
+        // Function to load content from a file
+        function loadContent(file) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading content:', error);
+                    document.getElementById('content-container').innerHTML = '<p>Error loading content. Please try again later.</p>';
+                });
+        }
+        // Update date display
+        function updateDate() {
+            const now = new Date();
+            const months = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            
+            document.getElementById('current-month').textContent = months[now.getMonth()];
+            document.getElementById('current-date').textContent = `${days[now.getDay()]}, ${now.getDate()}`;
+        }
+        // Initialize date
+        updateDate();
+        
+        // Update date every minute
+        setInterval(updateDate, 60000);
+        // Load the default content (dashboard)
+        loadContent('views/dashboard.html');
+    </script>
+</body>
 </html>
