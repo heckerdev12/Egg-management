@@ -1,0 +1,192 @@
+/* Inventory Page Styles */
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.inventory-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.inventory-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.inventory-table-container {
+    background-color: #40444b;
+    border-radius: 8px;
+    border: 1px solid #4f545c;
+    overflow: hidden;
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-table th {
+    background-color: #36393f;
+    padding: 15px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #b9bbbe;
+    text-transform: uppercase;
+    border-bottom: 1px solid #4f545c;
+}
+
+.inventory-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #4f545c;
+    vertical-align: middle;
+}
+
+.inventory-table tr:hover {
+    background-color: #36393f;
+}
+
+.supplier-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.supplier-name {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.supplier-id {
+    font-size: 12px;
+    color: #72767d;
+}
+
+.tray-type {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.tray-type.full {
+    background-color: #4caf50;
+    color: white;
+}
+
+.tray-type.partial {
+    background-color: #ffa726;
+    color: white;
+}
+
+.tray-type.empty {
+    background-color: #72767d;
+    color: white;
+}
+
+.quantity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.quantity-number {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.quantity-trays {
+    font-size: 12px;
+    color: #72767d;
+}
+
+.date-info {
+    font-size: 13px;
+    color: #b9bbbe;
+}
+
+.date-info.expiring {
+    color: #f04747;
+    font-weight: 600;
+}
+
+.price-info {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.price-per-egg {
+    font-size: 12px;
+    color: #72767d;
+}
+
+.status-badge.fresh {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-badge.expiring {
+    background-color: #ffa726;
+    color: white;
+}
+
+.status-badge.expired {
+    background-color: #f04747;
+    color: white;
+}
+
+/* Inventory Form Styles */
+.inventory-form {
+    padding: 25px;
+}
+
+.inventory-form .form-group select {
+    width: 100%;
+    padding: 10px;
+    background-color: #40444b;
+    border: 1px solid #4f545c;
+    border-radius: 4px;
+    color: #dcddde;
+    font-size: 14px;
+}
+
+.inventory-form .form-group select:focus {
+    outline: none;
+    border-color: #4caf50;
+}
+
+/* Responsive Design for Inventory */
+@media (max-width: 768px) {
+    .inventory-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .inventory-actions {
+        flex-direction: column;
+    }
+    
+    .inventory-stats {
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    
+    .inventory-table-container {
+        overflow-x: auto;
+    }
+    
+    .inventory-table {
+        min-width: 900px;
+    }
+}
