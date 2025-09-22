@@ -1,0 +1,86 @@
+/* Dashboard Specific Styles */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+.stat-card {
+    background-color: #40444b;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #4f545c;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-card h3 {
+    color: #b9bbbe;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.stat-change {
+    font-size: 12px;
+    color: #4caf50;
+}
+
+.stat-change.negative {
+    color: #f04747;
+}
+
+/* Chart Container */
+.chart-container {
+    background-color: #40444b;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #4f545c;
+    margin-top: 20px;
+}
+
+.chart-header {
+    margin-bottom: 20px;
+}
+
+.chart-header h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.chart-header p {
+    color: #b9bbbe;
+    font-size: 14px;
+}
+
+.chart-placeholder {
+    height: 300px;
+    background-color: #36393f;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #72767d;
+    font-size: 14px;
+    border: 2px dashed #4f545c;
+}
+
+/* Dashboard-specific responsive styles */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
