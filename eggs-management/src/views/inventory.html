@@ -1,32 +1,47 @@
 <!-- Inventory Management Section -->
 <div class="inventory-header">
+    <h2 class="page-title">
+        <span>📦</span>
+        Inventory Management
+    </h2>
     <div class="inventory-actions">
         <button class="btn btn-primary" id="addInventoryBtn">
             <span>📦</span> Add Inventory
         </button>
     </div>
+</div>
 
-    <div class="inventory-stats">
-        <div class="stat-mini">
-            <span class="stat-number" id="totalEggs">0</span>
-            <span class="stat-label">Total Eggs</span>
-        </div>
-        <div class="stat-mini">
-            <span class="stat-number" id="fullTrays">0</span>
-            <span class="stat-label">Full Trays</span>
-        </div>
-        <div class="stat-mini">
-            <span class="stat-number" id="partialTrays">0</span>
-            <span class="stat-label">Partial Trays</span>
-        </div>
-        <div class="stat-mini">
-            <span class="stat-number" id="thisMonthEggs">0</span>
-            <span class="stat-label">This Month</span>
-        </div>
+<div class="inventory-stats">
+    <div class="stat-card">
+        <div class="stat-icon">🥚</div>
+        <span class="stat-number" id="totalEggs">0</span>
+        <p class="stat-label">Total Eggs</p>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <span class="stat-number" id="fullTrays">0</span>
+        <p class="stat-label">Full Trays</p>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <span class="stat-number" id="partialTrays">0</span>
+        <p class="stat-label">Partial Trays</p>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <span class="stat-number" id="thisMonthEggs">0</span>
+        <p class="stat-label">This Month</p>
     </div>
 </div>
+
 <!-- Inventory Table -->
 <div class="inventory-table-container">
+    <div class="table-header">
+        <h3 class="table-title">
+            <span>📋</span>
+            Inventory Records
+        </h3>
+    </div>
     <table class="inventory-table">
         <thead>
             <tr>
@@ -42,42 +57,39 @@
         </tbody>
     </table>
 </div>
+
 <!-- Add Inventory Modal -->
-<div id="addInventoryModal" class="modal" style="display: none;">
+<div id="addInventoryModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Add Inventory Record</h3>
+            <h3 class="modal-title">
+                <span>📦</span>
+                Add Inventory Record
+            </h3>
             <button class="close-btn" id="closeInventoryModalBtn">✖️</button>
         </div>
         <form class="inventory-form" id="inventoryForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="supplierName">Supplier Name</label>
-                    <input type="text" id="supplierName" required>
-                </div>
+            <div class="form-group">
+                <label for="supplierName">Supplier Name</label>
+                <input type="text" id="supplierName" placeholder="Enter supplier name..." required>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
-                    <label for="supplierName">Trays</label>
-                    <input type="number" id="Trays" required>
+                    <label for="trays">Trays</label>
+                    <input type="number" id="trays" min="0" required>
                 </div>
                 <div class="form-group">
-                    <label for="quantity">Quantity (pieces)  </label>
+                    <label for="quantity">Quantity (pieces)</label>
                     <input type="number" id="quantity" min="0" required>
                 </div>
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="deliveryDate">Delivery Date  </label>
-                    <input type="date" id="deliveryDate" required>
-                </div>
+            <div class="form-group">
+                <label for="deliveryDate">Delivery Date</label>
+                <input type="date" id="deliveryDate" required>
             </div>
-
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary" id="cancelInventoryBtn">Cancel</button>
-                <button type="submit" class="btn btn-primary" onclick="showAddInventoryModal()">Add Inventory</button>
+                <button type="submit" class="btn btn-primary">Add Inventory</button>
             </div>
         </form>
     </div>
