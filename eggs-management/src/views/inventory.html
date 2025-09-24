@@ -46,39 +46,12 @@
             <tr>
                 <th>Supplier Name</th>
                 <th>Trays</th>
-                <th>Quantity (pcs)</th>
+                <th>Quantity (pieces)</th>
                 <th>Delivery Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody id="inventoryTableBody">
-            <!-- Rows will be added dynamically -->
-            <tr>
-                <td>Supplier A</td>
-                <td>10</td>
-                <td>1000</td>
-                <td>2023-05-15</td>
-                <td>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="action-btn view-btn" title="View">👁️</button>
-                        <button class="action-btn edit-btn" title="Edit">✏️</button>
-                        <button class="action-btn delete-btn" title="Delete">🗑️</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Supplier B</td>
-                <td>5</td>
-                <td>500</td>
-                <td>2023-05-10</td>
-                <td>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="action-btn view-btn" title="View">👁️</button>
-                        <button class="action-btn edit-btn" title="Edit">✏️</button>
-                        <button class="action-btn delete-btn" title="Delete">🗑️</button>
-                    </div>
-                </td>
-            </tr>
         </tbody>
     </table>
 </div>
@@ -105,7 +78,7 @@
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity (pieces)</label>
-                    <input type="number" id="quantity" min="0" placeholder="Total pieces" required>
+                    <input type="number" id="pieces" min="0" placeholder="Total pieces" required>
                 </div>
             </div>
             <div class="form-row">
