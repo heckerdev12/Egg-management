@@ -468,4 +468,158 @@
 .inventory-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
 .inventory-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
 .inventory-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
-/* Add more as needed for additional rows */
+
+/* Toast Notification Styles */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+    min-width: 300px;
+    max-width: 500px;
+    background-color: var(--background-dark);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s ease;
+}
+
+.toast.toast-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 12px;
+}
+
+.toast-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.toast-message {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.toast-success {
+    border-left: 4px solid var(--primary-color);
+}
+
+.toast-error {
+    border-left: 4px solid var(--danger-color);
+}
+
+.toast-info {
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Modal Improvements */
+.modal-small {
+    max-width: 450px;
+}
+
+.form-display {
+    padding: 12px;
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.delete-confirmation {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.delete-confirmation p {
+    color: var(--text-color);
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.delete-item-info {
+    background-color: var(--secondary-color);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.btn-danger {
+    background-color: var(--danger-color, #dc3545);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Action Button Improvements */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.view-btn:hover {
+    color: var(--accent-color, #17a2b8);
+    border-color: var(--accent-color, #17a2b8);
+}
+
+.delete-btn:hover {
+    color: var(--danger-color, #dc3545);
+    border-color: var(--danger-color, #dc3545);
+}
+
+/* Responsive Toast */
+@media (max-width: 480px) {
+    .toast {
+        left: 20px;
+        right: 20px;
+        min-width: auto;
+        transform: translateY(-100%);
+    }
+    
+    .toast.toast-show {
+        transform: translateY(0);
+    }
+}
+
+/* Add CSS variables if they don't exist */
+:root {
+    --danger-color: #dc3545;
+    --accent-color: #17a2b8;
+    --warning-color: #ffc107;
+}
