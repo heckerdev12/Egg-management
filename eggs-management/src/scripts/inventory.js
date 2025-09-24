@@ -7,6 +7,145 @@
   function fmtDate(d) { if (!d) return ''; const dt = new Date(d); return dt.toLocaleDateString('en-GB'); }
   function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+  /* -------------------- Toast Notification -------------------- */
+  function showToast(message, type = 'success') {
+    // Remove existing toast if any
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+      existingToast.remove();
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+      <div class="toast-content">
+        <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+        <span class="toast-message">${escapeHtml(message)}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Show animation
+    setTimeout(() => toast.classList.add('toast-show'), 200);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove('toast-show');
+      setTimeout(() => toast.remove(), 900);
+    }, 6000);
+  }
+
+  /* -------------------- View Details Modal -------------------- */
+  function showViewModal(item) {
+    // Remove existing view modal if any
+    const existingModal = document.querySelector('#viewInventoryModal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.id = 'viewInventoryModal';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span>👁️</span>
+            Inventory Details
+          </h3>
+          <button class="close-btn" data-action="close-view-modal">✖</button>
+        </div>
+        <div class="inventory-form">
+          <div class="form-group">
+            <label>Supplier Name</label>
+            <div class="form-display">${escapeHtml(item.supplierName)}</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Trays</label>
+              <div class="form-display">${escapeHtml(item.trays)}</div>
+            </div>
+            <div class="form-group">
+              <label>Quantity (pieces)</label>
+              <div class="form-display">${escapeHtml(item.quantity)}</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Delivery Date</label>
+              <div class="form-display">${fmtDate(item.deliveryDate)}</div>
+            </div>
+            <div class="form-group">
+              <label>Added On</label>
+              <div class="form-display">${fmtDate(item.createdAt)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+  }
+
+  function closeViewModal() {
+    const modal = document.querySelector('#viewInventoryModal');
+    if (modal) {
+      modal.style.display = 'none';
+      setTimeout(() => modal.remove(), 300);
+    }
+  }
+
+  /* -------------------- Delete Confirmation Modal -------------------- */
+  function showDeleteModal(item, index) {
+    // Remove existing delete modal if any
+    const existingModal = document.querySelector('#deleteInventoryModal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.id = 'deleteInventoryModal';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class="modal-content modal-small">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span>🗑️</span>
+            Delete Inventory
+          </h3>
+          <button class="close-btn" data-action="close-delete-modal">✖</button>
+        </div>
+        <div class="inventory-form">
+          <div class="delete-confirmation">
+            <p>Are you sure you want to delete this inventory record?</p>
+            <div class="delete-item-info">
+              <strong>Supplier:</strong> ${escapeHtml(item.supplierName)}<br>
+              <strong>Trays:</strong> ${escapeHtml(item.trays)} Trays<br>
+              <strong>Quantity:</strong> ${escapeHtml(item.quantity)} pieces<br>
+              <strong>Delivery Date:</strong> ${fmtDate(item.deliveryDate)}
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-danger" data-action="confirm-delete" data-index="${index}">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+  }
+
+  function closeDeleteModal() {
+    const modal = document.querySelector('#deleteInventoryModal');
+    if (modal) {
+      modal.style.display = 'none';
+      setTimeout(() => modal.remove(), 300);
+    }
+  }
+
   /* -------------------- modal control -------------------- */
   function showAddInventoryModal() {
     const modal = el('addInventoryModal');
@@ -28,24 +167,20 @@
     const tbody = el('inventoryTableBody');
     if (!tbody) return;
     tbody.innerHTML = inventory.map((it, idx) => {
-      const trayLabel = it.trayType === 'full' ? 'Full (30)' : it.trayType === 'partial' ? 'Partial' : 'Empty';
-      const trayClass = `tray-type ${escapeHtml(it.trayType || '')}`;
-      const trays = Math.floor(it.quantity / 30);
+      const trayClass = `tray-type ${escapeHtml(it.trays || '')}`;
       return `
         <tr>
           <td class="supplier-info">
             <div class="supplier-name">${escapeHtml(it.supplierName)}</div>
-            <div class="supplier-id">#${it.id}</div>
           </td>
-          <td class="${trayClass}">${trayLabel}</td>
+          <td class="${trayClass}">${it.trays}</td>
           <td class="quantity-info">
             <div class="quantity-number">${it.quantity}</div>
-            <div class="quantity-trays">${trays} tray(s)</div>
           </td>
           <td class="date-info">${fmtDate(it.deliveryDate)}</td>
           <td class="action-buttons">
-            <button class="btn btn-icon" data-action="view" data-index="${idx}">👁️</button>
-            <button class="btn btn-icon" data-action="delete" data-index="${idx}">🗑️</button>
+            <button class="btn btn-icon action-btn view-btn" data-action="view" data-index="${idx}">👁️</button>
+            <button class="btn btn-icon action-btn delete-btn" data-action="delete" data-index="${idx}">🗑️</button>
           </td>
         </tr>
       `;
@@ -60,8 +195,8 @@
     if (!totalEggsEl) return;
 
     const totalEggs = inventory.reduce((s, i) => s + (i.quantity || 0), 0);
-    const fullTrays = inventory.filter(i => i.trayType === 'full').length;
-    const partialTrays = inventory.filter(i => i.trayType === 'partial').length;
+    const fullTrays = inventory.filter(i => i.trays === 'full').length;
+    const partialTrays = inventory.filter(i => i.trays === 'partial').length;
     const now = new Date();
     const thisMonthEggs = inventory
       .filter(i => {
@@ -78,30 +213,37 @@
 
   /* -------------------- actions -------------------- */
   function addInventoryFromForm(formEl) {
-    // tolerant reads (works if expiryDate missing in your HTML)
+    // tolerant reads (works if missing in your HTML)
     const supplierName = (el('supplierName')?.value || '').trim();
-    const trayType = el('trayType')?.value || '';
-    const quantity = parseInt(el('quantity')?.value || '0', 10) || 0;
-    const price = parseFloat(el('price')?.value || '0') || 0;
+    const trays = parseInt(el('trays')?.value || '0', 10) || 0;
+    const quantity = parseInt(el('pieces')?.value || '0', 10) || 0;
     const deliveryDate = el('deliveryDate')?.value || '';
-    const expiryDate = el('expiryDate') ? el('expiryDate').value : null;
-    const notes = (el('inventoryNotes')?.value || '').trim();
 
-    if (!supplierName || !trayType || !quantity || !price || !deliveryDate) {
-      alert('Please fill in all required fields');
+    if (!supplierName || !trays || !quantity || !deliveryDate) {
+      showToast('Please fill in all required fields', 'error');
       return;
     }
 
     const newItem = {
       id: Date.now(),
-      supplierName, trayType, quantity, price, deliveryDate, expiryDate, notes, createdAt: new Date().toISOString()
+      supplierName, trays, quantity, deliveryDate, createdAt: new Date().toISOString()
     };
 
     inventory.push(newItem);
     renderInventory();
     updateStats();
     closeAddInventoryModal();
-    alert('Inventory added successfully!');
+    showToast('Inventory added successfully!', 'success');
+  }
+
+  function deleteInventoryItem(index) {
+    if (isNaN(index) || !inventory[index]) return;
+    
+    inventory.splice(index, 1);
+    renderInventory();
+    updateStats();
+    closeDeleteModal();
+    showToast('Inventory deleted successfully!', 'success');
   }
 
   /* -------------------- event delegation -------------------- */
@@ -118,7 +260,16 @@
     // close modal via X or close button
     if (target.closest && (target.closest('#closeInventoryModalBtn') || target.closest('.close-btn'))) {
       ev.preventDefault();
-      closeAddInventoryModal();
+      const viewModal = document.querySelector('#viewInventoryModal');
+      const deleteModal = document.querySelector('#deleteInventoryModal');
+      
+      if (viewModal && viewModal.contains(target)) {
+        closeViewModal();
+      } else if (deleteModal && deleteModal.contains(target)) {
+        closeDeleteModal();
+      } else {
+        closeAddInventoryModal();
+      }
       return;
     }
 
@@ -126,6 +277,15 @@
     if (target.closest && target.closest('#cancelInventoryBtn')) {
       ev.preventDefault();
       closeAddInventoryModal();
+      return;
+    }
+
+    // View modal actions - REMOVE THIS SECTION
+    // Delete modal actions - REMOVE THIS SECTION
+
+    if (target.closest && target.closest('[data-action="confirm-delete"]')) {
+      const index = parseInt(target.closest('[data-action="confirm-delete"]').dataset.index, 10);
+      deleteInventoryItem(index);
       return;
     }
 
@@ -139,15 +299,9 @@
       if (!item) return;
 
       if (action === 'view') {
-        alert(
-          `Inventory Details:\n\nSupplier: ${item.supplierName}\nType: ${item.trayType}\nQty: ${item.quantity}\nDelivery: ${fmtDate(item.deliveryDate)}\nExpiry: ${item.expiryDate ? fmtDate(item.expiryDate) : 'N/A'}\nPrice: KSh ${item.price}\nNotes: ${item.notes || 'None'}`
-        );
+        showViewModal(item);
       } else if (action === 'delete') {
-        if (confirm(`Delete inventory from ${item.supplierName}?`)) {
-          inventory.splice(index, 1);
-          renderInventory();
-          updateStats();
-        }
+        showDeleteModal(item, index);
       }
     }
   });
@@ -162,8 +316,13 @@
 
   // close modal when clicking outside it
   window.addEventListener('click', function (ev) {
-    const modal = el('addInventoryModal');
-    if (modal && ev.target === modal) closeAddInventoryModal();
+    const addModal = el('addInventoryModal');
+    const viewModal = document.querySelector('#viewInventoryModal');
+    const deleteModal = document.querySelector('#deleteInventoryModal');
+    
+    if (addModal && ev.target === addModal) closeAddInventoryModal();
+    if (viewModal && ev.target === viewModal) closeViewModal();
+    if (deleteModal && ev.target === deleteModal) closeDeleteModal();
   });
 
   // initial render if elements already present
